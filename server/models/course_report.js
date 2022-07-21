@@ -324,8 +324,8 @@ funGetItemList: GetItemList = (obj, db) => {
             var arrayAllObjData = [];
             var query = { strStatus: "N" };
             
-            // if (obj.fieldName)
-            // query.fieldName = obj.fieldName
+            if (obj.fieldName)
+            query.fieldName = obj.fieldName
 
             // if (obj. description)
             // query. description = obj. description
@@ -586,6 +586,7 @@ funGetListIdNet: ListById = (obj, db) => {
           id:"$_id",
           material: "$material",
           questionPaper: "$questionPaper",
+          videoLink:"$videoLink"
         }
       };
       db.collection(config.NET_COLLECTION).find(query).count()
