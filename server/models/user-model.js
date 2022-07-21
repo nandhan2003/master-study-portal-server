@@ -18,7 +18,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             try {
 
-                var checkQuery = ({ $or: [{ email: obj.email }, { userName: obj.userName }] });
+                var checkQuery = ({ $or: [{ email: obj.email }] });
                 db.collection(config.USER_COLLECTION).find(checkQuery).toArray((err, user) => {
                     if (user && user.length) {
                         resolve({ success: false, message: 'Email or User Name Already Exists', data: [] });
@@ -86,7 +86,7 @@ module.exports = {
                     if (!doc) {
                         resolve({ success: false, message: 'The email address is invalid', data: arryEmpty });
                     } else {
-                        if (doc.userType === "ADMIN_USER") {
+                        // if (doc.userType === "ADMIN_USER") {
                             var objLoginpassword = common.validPassword(obj.password, doc);
 
                             if (objLoginpassword) {
@@ -115,9 +115,9 @@ module.exports = {
                                     }
                                 });
                             }
-                        } else {
-                            resolve({ success: false, message: 'Permmision denied', data: arryEmpty });
-                        }
+                        // } else {
+                        //     resolve({ success: false, message: 'Permmision denied', data: arryEmpty });
+                        // }
 
                     }
                 });
