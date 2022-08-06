@@ -6,6 +6,7 @@ module.exports = function(app, db) {
     require('./server/service/services')(app, db);
     require('./server/service/booking')(app, db);
     require('./server/service/course')(app, db);
+    require('./server/service/mail')(app, db);
 
     require('./server/service/upload/upload')(app, db);
 

@@ -17,7 +17,7 @@ module.exports = {
             try {
 
 
-                    var email = "stepstrainingacademy@gmail.com"
+                    var email = obj.email
                     let title = `Contact Details `
                     let api_link = `https://EasyPM.com//Resetpassword/@DE`
                     let subject = "Client Enquiry"
@@ -122,7 +122,7 @@ module.exports = {
                                                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 36px; font-weight: 800; line-height: 48px;"
                                                             class="mobile-center">
                                                             <h1 style="font-size: 36px; font-weight: 800; margin: 0; color: #ffffff;">
-                                                                Steps</h1>
+                                                                Study Mate</h1>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -208,20 +208,6 @@ module.exports = {
                     resolve({success: true, message: 'Your record was noted.',data:"keep in touch"});
                 // }
               
-                // var email_id = "jawadrahmannbr@gmail.com"
-                // console.log("email -----",email_id)
-                // email = email_id;
-                // email1 = 'easypmuk@gmail.com'
-                // let subject = "Welcome to steps"
-                // let body =    `<!doctype html> 
-                //                 <p><b> We are waiting for your approvel. </b></p>
-                //                 <p>Please make it fast scheduled work is pending </p>
-                //                 <a >Thank you.</a>
-                //                 </html>`
-            
-                // send_email(email, subject, body)
-                // resolve({success: true, message: 'Send to your email.'});
-                             
      
             } catch (e) {
                 throw resolve({success: false, message: 'System ' + e, data: arryEmpty});
@@ -239,12 +225,12 @@ function send_email(email, subject, html){
                 service : 'gmail',
                 auth : {
                     user : 'greeshmavg77@gmail.com',
-                    pass : '9747308774'
+                    pass : 'cetwkmavkkcygysi'
                 }
             });
             
          let mailOptions =({
-            from: [{ name:"Team Steps" , address: "stepstrainingacademy@gmail.com" }], // sender address
+            from: [{ name:"Study Mate" , address: "greeshmavg77@gmail.com" }], // sender address
             to: [
                 {  address: email },
              

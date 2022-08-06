@@ -99,6 +99,7 @@ module.exports = {
             _id:"$_id",
             semester: "$semester",
             description: "$description",
+            category:"$category"
            
           }
         };
