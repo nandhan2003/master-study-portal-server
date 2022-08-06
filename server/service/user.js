@@ -70,7 +70,6 @@ module.exports = (app, db) => {
     @Function: Login user details Data
     */
     app.post('/api/auth/login', (req, res) => {
-        console.log("sdgas ==---", req.body)
         try {
             var obj = req.body;
             if (common.isEmptyObject(obj)) {
@@ -93,7 +92,6 @@ module.exports = (app, db) => {
 
     });
     app.post('/api/user/getuserList',(req,res) => {
-        console.log("show her -----",req.body)
         try{
             var obj = req.body
             if(!obj){
