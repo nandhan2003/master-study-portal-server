@@ -245,6 +245,31 @@ app.post('/api/course/getQuestionList',(req, res) => {
 
 });
 
+
+//questionlist
+app.post('/api/course/getQuestionGroupList',(req, res) => {
+    try {
+       
+        var obj = req.body
+        if (!obj) {
+            res.json({ success: false, message: 'Params missing', data: arryEmpty });
+        } else {
+          COURSEREPORT.funGetQuestionGroupList(obj, db).then((result) => {
+                if (result && result.success === true) {
+                    res.status(200).json(result)
+                }
+                else {
+                    res.status(200).json(result)
+                }
+            });
+        }
+    } catch (e) {
+        console.log("Error", e);
+        res.status(500).json({ success: false, message: "Error:" + e, data: arryEmpty });
+    }
+  
+  });
+
 //sucategory update
 app.post('/api/course/subcategoryUpdate', (req,res) => {
     try{
