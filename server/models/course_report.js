@@ -13,7 +13,7 @@ module.exports = {
         var query = { strStatus: "N" };
         
         if (obj.semester)
-        query.semester = obj.semester
+         query.semester = obj.semester
 
         if (obj.pdf)
         query.pdf = obj.pdf
@@ -71,17 +71,10 @@ module.exports = {
   },
 
   funGetQuestionGroupList: QuestionGroupList = (obj, db) => {
-    console.log("getlist ====", obj)
     return new Promise((resolve, reject) => {
       try {
         var arrayAllObjData = [];
         var query = { strStatus: "N" };
-        
-        // if (obj.semester)
-        // query.semester = obj.semester
-
-        // if (obj.pdf)
-        // query.pdf = obj.pdf
 
         var intSkipCount = 0;
         var intPageLimit = 0;
@@ -89,6 +82,7 @@ module.exports = {
         intSkipCount = parseInt(obj.intSkipCount);
         if (obj.intPageLimit)
         intPageLimit = parseInt(obj.intPageLimit);
+
         var Project = {
           $project: {
             // id:"$_id",
@@ -101,33 +95,31 @@ module.exports = {
             
           }
         };
-        db.collection(config.QUESTION_COLLECTION).find(query).count()
-                .then((totalPageCount) => {
-                    if (totalPageCount) {
-                        if (!intPageLimit)
-                            intPageLimit = parseInt(totalPageCount);
-                        db.collection(config.QUESTION_COLLECTION).aggregate([
-                          // { $match: query },
-                          {
-                            $group : { _id : "$subCategory.category.fieldName", books: { $push: "$$ROOT" } }
-                          },
-                        // { $sort: { datCreateDateAndTime: -1 } },
-                        // { "$skip": intSkipCount }, { "$limit": intPageLimit },
-                            // Project
-                        ]).toArray((err, doc) => {
-                            if (err) throw err;
-                            if (doc) {
-                              var objTotal = { intTotalCount: totalPageCount };
-                              arrayAllObjData.push(doc);
-                              arrayAllObjData.push(objTotal);
-                                resolve({ success: true, message: 'Successfully.', data: arrayAllObjData});
-                            }
 
-                        });
-                    } else {
-                        resolve({ success: false, message: ' No Data Found', data: arryEmpty });
-                    }
-                })
+        db.collection(config.QUESTION_COLLECTION).find(query).count()
+          .then((totalPageCount) => {
+            if (totalPageCount) {
+              if (!intPageLimit)
+                intPageLimit = parseInt(totalPageCount);
+              db.collection(config.QUESTION_COLLECTION).aggregate([
+                {$match:query},
+                {
+                  $group : { _id : "$subCategory.category.fieldName",
+                  books: { $push:{subject:"$subject",year:"$year",pdf:"$pdf" } } }
+                },
+              ]).toArray((err, doc) => {
+                if (err) throw err;
+                if (doc) {
+                  var objTotal = { intTotalCount: totalPageCount };
+                  arrayAllObjData.push(doc);
+                  arrayAllObjData.push(objTotal);
+                    resolve({ success: true, message: 'Successfully.', data: arrayAllObjData});
+                }
+              });
+            } else {
+                resolve({ success: false, message: ' No Data Found', data: arryEmpty });
+            }
+          })
 
         } catch (e) {
             throw resolve({ success: false, message: 'System ' + e, data: arryEmpty });
