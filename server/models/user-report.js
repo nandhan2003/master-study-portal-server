@@ -96,7 +96,7 @@ module.exports = {
                 var query1 = {};
 
                 if (obj.userName)
-                    query.userName = obj.userName
+                    query.name = obj.userName
 
                 if (obj.mobile)
                     query.mobile = obj.mobile
@@ -115,13 +115,13 @@ module.exports = {
                     $project: {
                         _id: "$_id",
                         mobile: "$mobile",
-                        userName: "$userName",
+                        name: "$name",
                         email: "$email",
                       
                     }
                 };
 
-                db.collection(config.USER_COLLECTION).aggregate([{
+                db.collection(config.CUSTOMER_USER_COLLECTION).aggregate([{
                     $match: {
                         $and: [query, query1]
                     }
@@ -134,7 +134,7 @@ module.exports = {
                             totalPageCount = arraytotalPageCount[0].intTotalCount;
                             if (!intPageLimit)
                                 intPageLimit = parseInt(totalPageCount);
-                            db.collection(config.USER_COLLECTION).aggregate([{
+                            db.collection(config.CUSTOMER_USER_COLLECTION).aggregate([{
                                 $match: {
                                     $and: [query, query1]
                                 }

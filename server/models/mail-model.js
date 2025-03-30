@@ -122,7 +122,7 @@ module.exports = {
                                                             style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 36px; font-weight: 800; line-height: 48px;"
                                                             class="mobile-center">
                                                             <h1 style="font-size: 36px; font-weight: 800; margin: 0; color: #ffffff;">
-                                                                Study Mate</h1>
+                                                                Master Study Portal</h1>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -204,6 +204,7 @@ module.exports = {
                     </body>`
         
                     send_email(email, subject, body)
+                    saveCustomer(db,obj)
                     // // resolve(result);
                     resolve({success: true, message: 'Your record was noted.',data:"keep in touch"});
                 // }
@@ -224,17 +225,18 @@ function send_email(email, subject, html){
             let transporter = nodemailer.createTransport({
                 service : 'gmail',
                 auth : {
-                    user : 'greeshmavg77@gmail.com',
-                    pass : 'cetwkmavkkcygysi'
+                    user : 'masterstudyportal@gmail.com',
+                    pass : 'mjbo mwdv jcpa ujqc'
+                },
+                tls: {
+                    rejectUnauthorized: false, // Ignore certificate validation
                 }
             });
             
          let mailOptions =({
-            from: [{ name:"Study Mate" , address: "greeshmavg77@gmail.com" }], // sender address
-            to: [
-                {  address: email },
-             
-            ],
+            from: [{ name:"Master Study Portal" , address: "masterstudyportal@gmail.com" }], // sender address
+            // to: email,
+            to: "mohdadhil1998@gmail.com",
             subject: "Hey you, awesome!",
             subject : subject,
             html : html
@@ -253,6 +255,46 @@ function send_email(email, subject, html){
     })
 }
 
+function saveCustomer(db , obj){
+    return new Promise((resolve, reject) => {
+            try {
+
+                // var checkQuery = ({ $or: [{ email: obj.email }] });
+                // db.collection(config.CUSTOMER_USER_COLLECTION).find(checkQuery).toArray((err, user) => {
+                //     if (user && user.length) {
+                //         resolve({ success: false, message: 'Email or User Name Already Exists', data: [] });
+                //     } else {
+
+                        const newObject = {
+                            pkIntUserId: ObjectID(),
+                            name: obj.name,
+                            mobile: obj.mobile,
+                            messege: obj.messege,
+                            email: obj.email.toLowerCase(),
+                            subject: obj.subject,
+                            datCreateDateAndTime: new Date(),
+                            datLastModifiedDateTime: null,
+                            strStatus: 'N',
+                        };
+                        db.collection(config.CUSTOMER_USER_COLLECTION).insertOne(newObject, (err, doc) => {
+                            if (err) resolve({ success: false, message: 'customer Creation Failed.', arryEmpty });
+                            else if (doc && doc.ops && doc.ops.length === true) {
+                            }
+                            else {
+                                resolve({ success: true, message: 'customer saved successfully', data: [doc.ops[0]] });
+                            };
+                        });
+
+
+                //     }
+                // });
+
+
+            } catch (e) {
+                throw resolve({ success: false, message: 'System ' + e, data: arryEmpty });
+            }
+        });
+}
 {/* <tr>
 <td width="75%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;"> Site Scheduled # </td>
 <td width="25%" align="left" bgcolor="#eeeeee" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px;">` + "ite Scheduled" + `</td>
